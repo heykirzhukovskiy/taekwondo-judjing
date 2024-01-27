@@ -43,7 +43,7 @@ h1 {
  */
 hr {
   -webkit-box-sizing: content-box;
-          box-sizing: content-box;
+  box-sizing: content-box;
   height: 0;
   overflow: visible;
 }
@@ -74,7 +74,7 @@ abbr[title] {
   border-bottom: none;
   text-decoration: underline;
   -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted;
+  text-decoration: underline dotted;
 }
 
 /**
@@ -213,7 +213,7 @@ fieldset {
  */
 legend {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   color: inherit;
   display: table;
   max-width: 100%;
@@ -242,7 +242,7 @@ textarea {
 [type="checkbox"],
 [type="radio"] {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding: 0;
 }
 
@@ -312,16 +312,21 @@ template {
 }
 
 @font-face {
-  font-family: 'Kombat 11';
+  font-family: "Kombat 11";
   src: url("../assets/fonts/Kombat11-Regular.eot");
-  src: url("../assets/fonts/Kombat11-Regular.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/Kombat11-Regular.woff2") format("woff2"), url("../assets/fonts/Kombat11-Regular.woff") format("woff"), url("../assets/fonts/Kombat11-Regular.ttf") format("truetype"), url("../assets/fonts/Kombat11-Regular.svg#Kombat11-Regular") format("svg");
+  src: url("../assets/fonts/Kombat11-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/Kombat11-Regular.woff2") format("woff2"),
+    url("../assets/fonts/Kombat11-Regular.woff") format("woff"),
+    url("../assets/fonts/Kombat11-Regular.ttf") format("truetype"),
+    url("../assets/fonts/Kombat11-Regular.svg#Kombat11-Regular") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 body {
-  font-family: "Kombat 11" ,sans-serif;
+  font-family: "Kombat 11", sans-serif;
   font-style: normal;
   font-display: swap;
   font-weight: normal;
@@ -330,16 +335,16 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
   background: #000;
-  -webkit-transition: all .3s;
-  transition: all .3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .main {
@@ -358,11 +363,11 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .container_half {
@@ -371,11 +376,11 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 50%;
   height: 100%;
 }
@@ -395,15 +400,15 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   height: 100%;
   width: 100%;
-  -webkit-transition: all .3s;
-  transition: all .3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .interface-start > img {
@@ -423,15 +428,15 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   height: 100%;
   width: 100%;
-  -webkit-transition: all .3s;
-  transition: all .3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .interface-end > img {
@@ -449,17 +454,17 @@ body {
   top: 5%;
   left: 50%;
   -webkit-transform: translate(-50%);
-          transform: translate(-50%);
+  transform: translate(-50%);
   font-size: 70px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -476,18 +481,18 @@ body {
   left: 50%;
   top: 10%;
   -webkit-transform: translate(-50%);
-          transform: translate(-50%);
+  transform: translate(-50%);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
+  flex-wrap: nowrap;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   font-size: 50px;
 }
 
@@ -496,17 +501,17 @@ body {
   top: calc(50% - 70px);
   left: 50%;
   -webkit-transform: translate(-50%);
-          transform: translate(-50%);
+  transform: translate(-50%);
   font-size: 100px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -519,7 +524,7 @@ body {
   left: 50%;
   top: 2%;
   -webkit-transform: translate(-50%);
-          transform: translate(-50%);
+  transform: translate(-50%);
   font-size: 40px;
 }
 
