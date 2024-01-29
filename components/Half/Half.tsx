@@ -3,11 +3,11 @@ type HalfProps = {
 };
 
 const classNames = {
-  red: "bg-red-800",
-  blue: "bg-blue-800",
+  red: "bg-red-600",
+  blue: "bg-blue-600",
 };
 
 export const Half = ({ color }: HalfProps) => {
   const className = classNames[color];
-  return <div className={"w-1/2 h-full " + className}></div>;
+  return <div className={"w-1/2 h-screen " + className}></div>;
 };

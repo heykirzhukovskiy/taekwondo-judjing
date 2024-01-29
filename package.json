@@ -1,5 +1,10 @@
 {
   "name": "taekwondo-judjing",
+  "author": {
+    "name": "Maksymilian Kowalski",
+    "url": "https://holakirr.com",
+    "email": "kpetunin@proton.me"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +20,7 @@
     "use-sound": "^4.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.8",
+    "@types/node": "^20.11.10",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.17",
