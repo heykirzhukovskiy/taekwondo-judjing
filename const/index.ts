@@ -1,3 +1,9 @@
+export const author = {
+  name: "Kirill Petunin",
+  url: "https://holakirr.com",
+  email: "kpetunin@proton.me",
+};
+
 export const STAGES = {
   START: "START",
   FIRST_ROUND: "FIRST_ROUND",
