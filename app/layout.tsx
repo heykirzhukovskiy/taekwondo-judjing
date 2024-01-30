@@ -38,7 +38,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => (
   <html lang="ru">
-    <body className={kombatFont.className + " relative"}>
+    <body className={kombatFont.className + " text-white"}>
       {children}
       <Footer />
     </body>

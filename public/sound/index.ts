@@ -1,7 +1,16 @@
-import fatalitySound from "./fatality.mp3";
-import finalRoundSound from "./finalround.mp3";
-import gong from "./gong.mp3";
-import laugh from "./laugh.mp3";
-import round1Sound from "./round1.mp3";
+import { StageVariant } from "@/const";
+import END from "./fatality.mp3";
+import SECOND_ROUND from "./finalround.mp3";
+import BREAK from "./gong.mp3";
+import PAUSE from "./laugh.mp3";
+import SETTING_UP from "./prepare_to_die.mp3";
+import FIRST_ROUND from "./round1.mp3";
 
-export { fatalitySound, finalRoundSound, gong, laugh, round1Sound };
+export const SOUNDS: { [key in StageVariant]: string } = {
+  END,
+  SECOND_ROUND,
+  BREAK,
+  PAUSE,
+  FIRST_ROUND,
+  SETTING_UP,
+};
