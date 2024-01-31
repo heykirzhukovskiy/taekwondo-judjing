@@ -27,6 +27,23 @@ export const STAGES: StageObject = {
   END: "END",
 };
 
+export const KEYS = {
+  [STAGES.SETTING_UP]: [{ code: "Enter", forText: "для начала" }],
+  [STAGES.FIRST_ROUND]: [
+    { code: "Space", forText: "для паузы" },
+    { code: "ArrowLeft", forText: "добавить очко левому бойцу" },
+    { code: "ArrowRight", forText: "добавить очко правому бойцу" },
+  ],
+  [STAGES.PAUSE]: [{ code: "Space", forText: "для продолжения" }],
+  [STAGES.BREAK]: [{ code: "Space", forText: "для паузы" }],
+  [STAGES.SECOND_ROUND]: [
+    { code: "Space", forText: "для паузы" },
+    { code: "ArrowLeft", forText: "добавить очко левому бойцу" },
+    { code: "ArrowRight", forText: "добавить очко правому бойцу" },
+  ],
+  [STAGES.END]: [{ code: "Enter", forText: "для начала" }],
+};
+
 export const STAGE_NAMES = {
   SETTING_UP: "Настройка",
   FIRST_ROUND: "Round 1",
@@ -41,18 +58,20 @@ export const TIMES = {
   BREAK: 30,
 };
 
+export const PLAYER_NAMES = {
+  FIRST: "Левый боец",
+  SECOND: "Правый боец",
+};
+
 export type FightStateType = {
   stage: StageVariant;
   prevStage: StageVariant;
-  times: typeof TIMES;
-  right: {
-    name: string;
-    score: number;
-  };
-  left: {
-    name: string;
-    score: number;
-  };
+  roundTime: number;
+  breakTime: number;
+  firstPlayerName: string;
+  firstPlayer: number;
+  secondPlayerName: string;
+  secondPlayer: number;
   timer: number;
   keys: {
     code: KeyVariant;
@@ -65,15 +84,12 @@ export type FightStateType = {
 export const defaultFightState: FightStateType = {
   stage: STAGES.SETTING_UP,
   prevStage: STAGES.SETTING_UP,
-  times: TIMES,
-  right: {
-    name: "right fighter",
-    score: 0,
-  },
-  left: {
-    name: "left fighter",
-    score: 0,
-  },
+  roundTime: TIMES.ROUND,
+  breakTime: TIMES.BREAK,
+  firstPlayerName: "",
+  firstPlayer: 0,
+  secondPlayerName: "",
+  secondPlayer: 0,
   timer: 0,
   interval: undefined,
   keys: [{ code: "Enter", forText: "для начала" }],
@@ -130,8 +146,8 @@ export const formInputs: FormInput[] = [
 ];
 
 export const defaultFormState: FormStateType = {
-  firstPlayerName: "",
-  secondPlayerName: "",
+  firstPlayerName: PLAYER_NAMES.FIRST,
+  secondPlayerName: PLAYER_NAMES.SECOND,
   roundTime: TIMES.ROUND,
   breakTime: TIMES.BREAK,
   fightNumber: 1,

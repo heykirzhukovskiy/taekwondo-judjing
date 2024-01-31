@@ -1,62 +1,61 @@
 "use client";
 
 import { Half, Instructions, Modal } from "@/components";
-import { STAGES, STAGE_NAMES, TIMES } from "@/const";
-import { useFightState, useFormState } from "@/hooks";
+import {
+  FightStateType,
+  FormParam,
+  FormStateType,
+  PLAYER_NAMES,
+  STAGES,
+  STAGE_NAMES,
+  defaultFightState,
+  defaultFormState,
+} from "@/const";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const { fightState, setFightState, updateFightStage } = useFightState();
-  const { formState, updateFormState } = useFormState();
+  const [fightState, setFightState] =
+    useState<FightStateType>(defaultFightState);
+  const [formState, setFormState] = useState<FormStateType>(defaultFormState);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const setNewScore = (side: "left" | "right") => {
+  const handleFormUpdate = (
+    param: FormParam,
+    value: FormStateType[FormParam]
+  ) => {
+    setFormState((prev) => ({ ...prev, [param]: value }));
+  };
+  const startFightState = (newValues: FormStateType) => {
     setFightState((prev) => ({
       ...prev,
-      [side]: {
-        ...prev[side],
-        score: prev[side].score + 1,
-      },
+      ...newValues,
     }));
   };
-
-  const handleToggleModal = () => {
-    setModalOpen((prev) => !prev);
+  const addPoint = (player: "firstPlayer" | "secondPlayer") => {
+    setFightState((prev) => ({ ...prev, [player]: prev[player] + 1 }));
   };
 
   const handleStartButton = () => {
+    console.log(formState);
+
+    startFightState(formState);
+    setFightState((prev) => {
+      return {
+        ...prev,
+        stage: STAGES.FIRST_ROUND,
+      };
+    });
+    setFightState((prev) => {
+      console.log(prev);
+      return prev;
+    });
     setModalOpen(false);
-    const {
-      firstPlayerName,
-      secondPlayerName,
-      roundTime,
-      fightNumber,
-      breakTime,
-    } = formState;
-    setFightState((prev) => ({
-      ...prev,
-      left: {
-        name: firstPlayerName ? firstPlayerName : prev.left.name,
-        score: 0,
-      },
-      right: {
-        name: secondPlayerName ? secondPlayerName : prev.right.name,
-        score: 0,
-      },
-      times: {
-        ROUND: roundTime ? Number(roundTime) : prev.times.ROUND,
-        BREAK: breakTime ? Number(breakTime) : prev.times.BREAK,
-      },
-      fightNumber: fightNumber ? fightNumber : 1,
-      timer: roundTime ? Number(roundTime) : TIMES.ROUND,
-    }));
-    updateFightStage(STAGES.FIRST_ROUND);
   };
 
   const keyboardHandler = (e: KeyboardEvent) => {
     if (e.code === "Escape" && modalOpen) {
       e.preventDefault();
-      handleToggleModal();
+      setModalOpen(false);
     }
     if (
       e.code === "Enter" &&
@@ -73,11 +72,11 @@ export default function Home() {
       switch (e.code) {
         case "ArrowRight":
           e.preventDefault();
-          setNewScore("right");
+          addPoint("firstPlayer");
           break;
         case "ArrowLeft":
           e.preventDefault();
-          setNewScore("left");
+          addPoint("secondPlayer");
           break;
         case "Space":
           e.preventDefault();
@@ -105,13 +104,13 @@ export default function Home() {
     <main className="flex justify-center relative">
       <Half
         color="red"
-        name={fightState.left.name}
-        score={fightState.left.score}
+        name={fightState.firstPlayerName || PLAYER_NAMES.FIRST}
+        score={fightState.firstPlayer}
       />
       <Half
         color="blue"
-        name={fightState.right.name}
-        score={fightState.right.score}
+        name={fightState.secondPlayerName || PLAYER_NAMES.SECOND}
+        score={fightState.secondPlayer}
       />
       <p className="absolute top-[5%] text-8xl">
         Бой: {fightState.fightNumber}
@@ -119,10 +118,12 @@ export default function Home() {
       <p className="absolute top-[15%] text-6xl">
         {STAGE_NAMES[fightState.stage]}
       </p>
-      {fightState.timer && (
+      {fightState.timer ? (
         <p className="absolute top-[50%] -translate-y-1/2 text-6xl">
           {fightState.timer}
         </p>
+      ) : (
+        <></>
       )}
       <div className="absolute bottom-[5%] flex flex-col items-center gap-2">
         {fightState.keys.map((key) => (
@@ -132,9 +133,9 @@ export default function Home() {
       <Modal
         onStart={handleStartButton}
         isOpen={modalOpen}
-        onClose={handleToggleModal}
+        onClose={() => setModalOpen(false)}
         formState={formState}
-        onFormUpdate={updateFormState}
+        handleFormUpdate={handleFormUpdate}
       />
     </main>
   );

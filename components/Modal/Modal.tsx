@@ -8,7 +8,7 @@ type ModalProps = HTMLAttributes<HTMLDialogElement> & {
   onClose: () => void;
   onStart: () => void;
   formState: FormStateType;
-  onFormUpdate: (param: FormParam, value: FormStateType[FormParam]) => void;
+  handleFormUpdate: (param: FormParam, value: FormStateType[FormParam]) => void;
 };
 
 export const Modal = ({
@@ -16,7 +16,7 @@ export const Modal = ({
   isOpen,
   onStart,
   formState,
-  onFormUpdate,
+  handleFormUpdate,
 }: ModalProps) => (
   <dialog
     id="default-modal"
@@ -48,7 +48,7 @@ export const Modal = ({
                 name={name}
                 value={formState[name]}
                 type={type}
-                onChange={(e) => onFormUpdate(name, e.target.value)}
+                onChange={(e) => handleFormUpdate(name, e.target.value)}
               />
             </div>
           ))}
