@@ -1,7 +1,7 @@
 "use client";
 
 import { Half, Instructions, Modal } from "@/components";
-import { STAGES } from "@/const";
+import { STAGES, STAGE_NAMES, TIMES } from "@/const";
 import { useFightState, useFormState } from "@/hooks";
 import { useEffect, useState } from "react";
 
@@ -24,54 +24,74 @@ export default function Home() {
     setModalOpen((prev) => !prev);
   };
 
-  const handleStart = () => {
+  const handleStartButton = () => {
     setModalOpen(false);
-    updateFightStage(STAGES.FIRST_ROUND);
+    const {
+      firstPlayerName,
+      secondPlayerName,
+      roundTime,
+      fightNumber,
+      breakTime,
+    } = formState;
     setFightState((prev) => ({
       ...prev,
       left: {
-        name: formState.firstPlayerName
-          ? formState.firstPlayerName
-          : prev.left.name,
+        name: firstPlayerName ? firstPlayerName : prev.left.name,
         score: 0,
       },
       right: {
-        name: formState.secondPlayerName
-          ? formState.secondPlayerName
-          : prev.right.name,
+        name: secondPlayerName ? secondPlayerName : prev.right.name,
         score: 0,
       },
       times: {
-        ROUND: formState.roundTime ? formState.roundTime : prev.times.ROUND,
-        BREAK: formState.breakTime ? formState.breakTime : prev.times.BREAK,
+        ROUND: roundTime ? Number(roundTime) : prev.times.ROUND,
+        BREAK: breakTime ? Number(breakTime) : prev.times.BREAK,
       },
-      fightNumber: formState.fightNumber ? formState.fightNumber : 1,
+      fightNumber: fightNumber ? fightNumber : 1,
+      timer: roundTime ? Number(roundTime) : TIMES.ROUND,
     }));
+    updateFightStage(STAGES.FIRST_ROUND);
   };
 
   const keyboardHandler = (e: KeyboardEvent) => {
-    if (e.code === "Escape") {
+    if (e.code === "Escape" && modalOpen) {
       e.preventDefault();
       handleToggleModal();
     }
-    if (e.code === "Enter") {
+    if (
+      e.code === "Enter" &&
+      [STAGES.SETTING_UP, STAGES.END].includes(fightState.stage)
+    ) {
       e.preventDefault();
       setModalOpen(true);
-      updateFightStage(STAGES.FIRST_ROUND);
-      new Audio(fightState.sound).play();
     }
     if (
-      fightState.stage === STAGES.FIRST_ROUND ||
-      fightState.stage === STAGES.SECOND_ROUND
+      [STAGES.FIRST_ROUND, STAGES.SECOND_ROUND, STAGES.BREAK].includes(
+        fightState.stage
+      )
     ) {
-      if (e.code === "ArrowRight") {
-        setNewScore("right");
-      }
-      if (e.code === "ArrowLeft") {
-        setNewScore("left");
-      }
-      if (e.code === "Space") {
-        updateFightStage(STAGES.PAUSE);
+      switch (e.code) {
+        case "ArrowRight":
+          e.preventDefault();
+          setNewScore("right");
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          setNewScore("left");
+          break;
+        case "Space":
+          e.preventDefault();
+          if (fightState.stage === STAGES.PAUSE) {
+            updateFightStage(fightState.prevStage);
+          }
+          if (
+            [STAGES.FIRST_ROUND, STAGES.SECOND_ROUND, STAGES.BREAK].includes(
+              fightState.stage
+            )
+          ) {
+            updateFightStage(STAGES.PAUSE);
+          }
+          break;
       }
     }
   };
@@ -79,7 +99,7 @@ export default function Home() {
   useEffect(() => {
     document.addEventListener("keydown", keyboardHandler);
     return () => document.removeEventListener("keydown", keyboardHandler);
-  }, []);
+  }, [fightState.stage]);
 
   return (
     <main className="flex justify-center relative">
@@ -96,26 +116,26 @@ export default function Home() {
       <p className="absolute top-[5%] text-8xl">
         Бой: {fightState.fightNumber}
       </p>
-      <p className="absolute top-[15%] text-6xl">{STAGES[fightState.stage]}</p>
-      {(fightState.stage === STAGES.PAUSE ||
-        fightState.stage === STAGES.FIRST_ROUND ||
-        fightState.stage === STAGES.SECOND_ROUND) && (
+      <p className="absolute top-[15%] text-6xl">
+        {STAGE_NAMES[fightState.stage]}
+      </p>
+      {fightState.timer && (
         <p className="absolute top-[50%] -translate-y-1/2 text-6xl">
           {fightState.timer}
         </p>
       )}
-      <Modal
-        onStart={handleStart}
-        isOpen={modalOpen}
-        onClose={handleToggleModal}
-        formState={formState}
-        onFormUpdate={updateFormState}
-      />
       <div className="absolute bottom-[5%] flex flex-col items-center gap-2">
         {fightState.keys.map((key) => (
           <Instructions key={key.code} {...key} />
         ))}
       </div>
+      <Modal
+        onStart={handleStartButton}
+        isOpen={modalOpen}
+        onClose={handleToggleModal}
+        formState={formState}
+        onFormUpdate={updateFormState}
+      />
     </main>
   );
 }

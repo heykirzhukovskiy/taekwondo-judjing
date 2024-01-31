@@ -1,5 +1,4 @@
 import { KeyVariant } from "@/components/Instructions/Instructions";
-import { SOUNDS } from "@/public/sound";
 
 export const author = {
   name: "Kirill Petunin",
@@ -54,14 +53,13 @@ export type FightStateType = {
     name: string;
     score: number;
   };
-  winner: string;
-  sound: string;
   timer: number;
   keys: {
     code: KeyVariant;
     forText: string;
   }[];
   fightNumber: number;
+  interval: string | number | NodeJS.Timeout | undefined;
 };
 
 export const defaultFightState: FightStateType = {
@@ -76,9 +74,8 @@ export const defaultFightState: FightStateType = {
     name: "left fighter",
     score: 0,
   },
-  winner: "",
-  sound: SOUNDS.SETTING_UP,
   timer: 0,
+  interval: undefined,
   keys: [{ code: "Enter", forText: "для начала" }],
   fightNumber: 1,
 };

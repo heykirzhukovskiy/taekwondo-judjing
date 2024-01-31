@@ -1,3 +1,4 @@
+"use client";
 import {
   FightStateType,
   FormParam,
@@ -7,7 +8,7 @@ import {
   defaultFightState,
   defaultFormState,
 } from "@/const";
-import { SOUNDS } from "@/public/sound";
+
 import { useState } from "react";
 
 export const useFightState = () => {
@@ -15,63 +16,92 @@ export const useFightState = () => {
     useState<FightStateType>(defaultFightState);
 
   const updateFightStage = (newStage: StageVariant) => {
-    let timeout;
+    let stageTimeOut: string | number | NodeJS.Timeout | undefined;
+    setFightState((prev) => {
+      clearInterval(prev.interval);
+
+      console.log(prev);
+      return prev;
+    });
+
     switch (newStage) {
-      case STAGES.SETTING_UP:
-        return setFightState(defaultFightState);
       case STAGES.FIRST_ROUND || STAGES.SECOND_ROUND:
-        setFightState((prev) => ({
-          ...prev,
-          prevStage: prev.stage,
-          stage: newStage,
-          timer: fightState.times.ROUND,
-          sound: SOUNDS[newStage],
-          keys: [
-            { code: "Space", forText: "для паузы" },
-            { code: "ArrowLeft", forText: "добавить очко левому бойцу" },
-            { code: "ArrowRight", forText: "добавить очко правому бойцу" },
-            { code: "Enter", forText: "для окончания раунда" },
-          ],
-        }));
-        timeout = setTimeout(() => {
-          updateFightStage(STAGES.BREAK);
-        }, fightState.times.ROUND * 1000);
+        setFightState((prev) => {
+          clearTimeout(stageTimeOut);
+          stageTimeOut = setTimeout(() => {
+            updateFightStage(STAGES.BREAK);
+          }, prev.timer * 1000);
+          return {
+            ...prev,
+            prevStage: prev.stage,
+            stage: newStage,
+            keys: [
+              { code: "Space", forText: "для паузы" },
+              { code: "ArrowLeft", forText: "добавить очко левому бойцу" },
+              { code: "ArrowRight", forText: "добавить очко правому бойцу" },
+              { code: "Enter", forText: "для окончания раунда" },
+            ],
+            timer: prev.stage === STAGES.PAUSE ? prev.timer : prev.times.ROUND,
+            interval: setInterval(() => {
+              setFightState((prev) => ({
+                ...prev,
+                timer: prev.timer > 0 ? prev.timer - 1 : 0,
+              }));
+            }, 1000),
+          };
+        });
         break;
       case STAGES.PAUSE:
+        clearTimeout(stageTimeOut);
         setFightState((prev) => ({
           ...prev,
           stage: newStage,
-          sound: SOUNDS[newStage],
           keys: [{ code: "Space", forText: "для продолжения" }],
         }));
         break;
       case STAGES.BREAK:
-        setFightState((prev) => ({
-          ...prev,
-          stage: newStage,
-          timer: fightState.times.BREAK,
-          sound: SOUNDS[newStage],
-        }));
-        setTimeout(() => {
-          updateFightStage(STAGES.END);
-        }, fightState.times.BREAK * 1000);
+        clearTimeout(stageTimeOut);
+        setFightState((prev) => {
+          setInterval(() => {
+            setFightState((prev) => ({
+              ...prev,
+              timer: prev.timer > 0 ? prev.timer - 1 : 0,
+            }));
+          }, 1000);
+          setTimeout(() => {
+            updateFightStage(STAGES.SECOND_ROUND);
+          }, prev.times.BREAK * 1000);
+          return {
+            ...prev,
+            stage: newStage,
+            timer: prev.stage === STAGES.PAUSE ? prev.timer : prev.times.BREAK,
+            interval: setInterval(() => {
+              setFightState((prev) => ({
+                ...prev,
+                timer: prev.timer > 0 ? prev.timer - 1 : 0,
+              }));
+            }),
+          };
+        });
         break;
       case STAGES.END:
-        return setFightState((prev) => ({
-          ...prev,
-          stage: newStage,
-          timer: 0,
-          sound: SOUNDS[newStage],
-          winner:
-            prev.left.score > prev.right.score
-              ? prev.left.name
-              : prev.right.name,
-          keys: [{ code: "Enter", forText: "для начала" }],
-        }));
+        return setFightState((prev) => {
+          clearInterval(prev.interval);
+          return {
+            ...prev,
+            stage: newStage,
+            timer: 0,
+            keys: [{ code: "Enter", forText: "для начала" }],
+          };
+        });
+      case STAGES.SETTING_UP:
+        return setFightState(defaultFightState);
       default:
-        let _exhaustiveCheck: never;
+      // Remove the unused variable
+      // let _exhaustiveCheck: never;
     }
   };
+
   return { fightState, setFightState, updateFightStage };
 };
 
