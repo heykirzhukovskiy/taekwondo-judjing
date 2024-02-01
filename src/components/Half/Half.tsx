@@ -16,6 +16,6 @@ export const Half = ({ color, name, score }: HalfProps) => (
     className={"w-1/2 h-screen grid justify-center pt-10 " + classNames[color]}
   >
     <div className="align-top h-fit text-center text-4xl">{name}</div>
-    <div className="align-middle text-[40rem] text-center">{score}</div>
+    <div className="align-middle text-[30rem] text-center">{score}</div>
   </div>
 );

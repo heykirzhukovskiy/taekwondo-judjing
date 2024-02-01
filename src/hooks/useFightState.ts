@@ -18,19 +18,23 @@ export const useFightState = () => {
     setFightState((prev) => ({
       ...prev,
       ...newValues,
+      firstPlayer: 0,
+      secondPlayer: 0,
     }));
   };
 
   const addPoint = (player: "firstPlayer" | "secondPlayer") => {
-    setFightState((prev) => ({ ...prev, [player]: prev[player] + 1 }));
+    setFightState((prev) => ({ ...prev, [player]: prev[player]++ }));
   };
 
   const setFightStage = (stage: StageVariant) => {
     setFightState((prev) => {
       let timerTime = 0;
       let newState = { ...prev, keys: KEYS[stage] };
+
       clearInterval(interval);
       clearTimeout(timeout);
+
       switch (stage) {
         case STAGES.FIRST_ROUND:
           timerTime = prev.stage === STAGES.PAUSE ? prev.timer : prev.roundTime;
@@ -42,6 +46,7 @@ export const useFightState = () => {
           }, 1000);
           newState = {
             ...prev,
+            ...newState,
             stage,
             timer: timerTime,
           };
@@ -57,6 +62,7 @@ export const useFightState = () => {
           }, 1000);
           newState = {
             ...prev,
+            ...newState,
             stage,
             timer: timerTime,
           };
@@ -72,6 +78,7 @@ export const useFightState = () => {
           }, 1000);
           newState = {
             ...prev,
+            ...newState,
             stage,
             timer: timerTime,
           };
@@ -79,6 +86,7 @@ export const useFightState = () => {
         case STAGES.PAUSE:
           newState = {
             ...prev,
+            ...newState,
             prevStage: prev.stage,
             stage,
           };
@@ -86,11 +94,13 @@ export const useFightState = () => {
         case STAGES.END:
           newState = {
             ...prev,
+            ...newState,
             stage,
             timer: 0,
           };
           break;
       }
+
       return newState;
     });
   };

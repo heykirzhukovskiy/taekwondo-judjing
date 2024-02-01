@@ -17,10 +17,8 @@ export default function Home() {
 
   useEffect(() => {
     const keyboardHandler = (e: KeyboardEvent) => {
-      if (e.code === "Escape" && modalOpen) {
-        e.preventDefault();
-        setModalOpen(false);
-      }
+      console.log(e);
+
       if (
         e.code === "Enter" &&
         [STAGES.SETTING_UP, STAGES.END].includes(fightState.stage)
@@ -36,11 +34,11 @@ export default function Home() {
         switch (e.code) {
           case "ArrowRight":
             e.preventDefault();
-            addPoint("firstPlayer");
+            addPoint("secondPlayer");
             break;
           case "ArrowLeft":
             e.preventDefault();
-            addPoint("secondPlayer");
+            addPoint("firstPlayer");
             break;
           case "Space":
             e.preventDefault();
@@ -53,8 +51,8 @@ export default function Home() {
         setFightStage(fightState.prevStage);
       }
     };
-    document.addEventListener("keypress", keyboardHandler);
-    return () => document.removeEventListener("keypress", keyboardHandler);
+    document.addEventListener("keydown", keyboardHandler);
+    return () => document.removeEventListener("keydown", keyboardHandler);
   }, [fightState.stage]);
 
   return (
