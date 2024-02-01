@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export const Footer = () => {
   const developedYear = 2024;
   const currentYear = new Date(Date.now()).getFullYear();
@@ -12,16 +10,13 @@ export const Footer = () => {
       <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © {yearRange} Developed by{" "}
-          <Link href="https://holakirr.com/" className="hover:underline">
+          <a href="https://holakirr.com/" className="hover:underline">
             Kirill Petunin
-          </Link>{" "}
+          </a>{" "}
           for{" "}
-          <Link
-            href="https://alex-fomin.vercel.app/"
-            className="hover:underline"
-          >
+          <a href="https://alex-fomin.vercel.app/" className="hover:underline">
             Alexander Fomin
-          </Link>
+          </a>
           . All Rights Reserved.
         </span>
       </div>

@@ -1,4 +1,4 @@
-import { KeyVariant } from "@/components/Instructions/Instructions";
+import { KeyVariant } from "../components/Instructions/Instructions";
 
 export const author = {
   name: "Kirill Petunin",
@@ -10,8 +10,8 @@ export type StageVariant =
   | "SETTING_UP"
   | "FIRST_ROUND"
   | "BREAK"
-  | "PAUSE"
   | "SECOND_ROUND"
+  | "PAUSE"
   | "END";
 
 type StageObject = {
@@ -27,24 +27,29 @@ export const STAGES: StageObject = {
   END: "END",
 };
 
-export const KEYS = {
-  [STAGES.SETTING_UP]: [{ code: "Enter", forText: "для начала" }],
-  [STAGES.FIRST_ROUND]: [
-    { code: "Space", forText: "для паузы" },
-    { code: "ArrowLeft", forText: "добавить очко левому бойцу" },
-    { code: "ArrowRight", forText: "добавить очко правому бойцу" },
-  ],
-  [STAGES.PAUSE]: [{ code: "Space", forText: "для продолжения" }],
-  [STAGES.BREAK]: [{ code: "Space", forText: "для паузы" }],
-  [STAGES.SECOND_ROUND]: [
-    { code: "Space", forText: "для паузы" },
-    { code: "ArrowLeft", forText: "добавить очко левому бойцу" },
-    { code: "ArrowRight", forText: "добавить очко правому бойцу" },
-  ],
-  [STAGES.END]: [{ code: "Enter", forText: "для начала" }],
+export type KeyObject = {
+  code: KeyVariant;
+  forText: string;
 };
 
-export const STAGE_NAMES = {
+export const KEYS: { [key in StageVariant]: KeyObject[] } = {
+  SETTING_UP: [{ code: "Enter", forText: "для начала" }],
+  FIRST_ROUND: [
+    { code: "Space", forText: "для паузы" },
+    { code: "ArrowLeft", forText: "добавить очко левому бойцу" },
+    { code: "ArrowRight", forText: "добавить очко правому бойцу" },
+  ],
+  BREAK: [{ code: "Space", forText: "для паузы" }],
+  SECOND_ROUND: [
+    { code: "Space", forText: "для паузы" },
+    { code: "ArrowLeft", forText: "добавить очко левому бойцу" },
+    { code: "ArrowRight", forText: "добавить очко правому бойцу" },
+  ],
+  PAUSE: [{ code: "Space", forText: "для продолжения" }],
+  END: [{ code: "Enter", forText: "для начала" }],
+};
+
+export const STAGE_NAMES: { [key in StageVariant]: string } = {
   SETTING_UP: "Настройка",
   FIRST_ROUND: "Round 1",
   BREAK: "Перерыв",
@@ -73,12 +78,8 @@ export type FightStateType = {
   secondPlayerName: string;
   secondPlayer: number;
   timer: number;
-  keys: {
-    code: KeyVariant;
-    forText: string;
-  }[];
+  keys: KeyObject[];
   fightNumber: number;
-  interval: string | number | NodeJS.Timeout | undefined;
 };
 
 export const defaultFightState: FightStateType = {
@@ -91,7 +92,6 @@ export const defaultFightState: FightStateType = {
   secondPlayerName: "",
   secondPlayer: 0,
   timer: 0,
-  interval: undefined,
   keys: [{ code: "Enter", forText: "для начала" }],
   fightNumber: 1,
 };

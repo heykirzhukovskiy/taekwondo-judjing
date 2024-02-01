@@ -1,5 +1,5 @@
-import { FormParam, FormStateType, formInputs } from "@/const";
 import { HTMLAttributes } from "react";
+import { FormParam, FormStateType, formInputs } from "../../const";
 import { ModalFooter } from "./ModalFooter";
 import { ModalHeader } from "./ModalHeader";
 
