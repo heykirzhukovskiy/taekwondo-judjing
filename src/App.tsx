@@ -17,8 +17,6 @@ export default function Home() {
 
   useEffect(() => {
     const keyboardHandler = (e: KeyboardEvent) => {
-      console.log(e);
-
       if (
         e.code === "Enter" &&
         [STAGES.SETTING_UP, STAGES.END].includes(fightState.stage)
