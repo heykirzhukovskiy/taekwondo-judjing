@@ -2,46 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/index.min.css" />
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-    <title>Taekwondo Kombat 2021</title>
+    <title>Taekwondo Judjing</title>
+    <meta
+      name="description"
+      content="Website for taekwondo judges to score matches."
+    />
+    <meta property="og:title" content="Taekwondo Judjing" />
+    <meta
+      property="og:description"
+      content="Website for taekwondo judges to score matches."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content="https://taekwondo-judjing.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
   </head>
-
   <body>
-    <section class="container">
-      <div id="img-fatality" class="interface-end hidden">
-        <img
-          src="./assets/images/fatality.png"
-          alt="Fatality!"
-          class="interface-end__img"
-        />
-      </div>
-      <div class="main">
-        <div id="left-half" class="container_half container_half_left">
-          <p class="interface-name">Боец</p>
-          <h1 class="interface-count">0</h1>
-        </div>
-        <div id="right-half" class="container_half container_half_right">
-          <p id="name" class="interface-name">Боец</p>
-          <h1 id="count" class="interface-count">0</h1>
-        </div>
-        <div class="interface-fight">
-          <p id="fight-num" class="interface-fight__number">1</p>
-          <p class="interface-fight__text">Бой</p>
-        </div>
-        <div class="interface-round-wrap">
-          <p id="round-num" class="interface-round__text">Round 1</p>
-        </div>
-        <div id="time-wrap" class="interface-time">
-          <span class="interface-time__minutes" id="minutes">00</span>
-          <span class="interface-time__dots">:</span>
-          <span class="interface-time__seconds" id="seconds">00</span>
-        </div>
-      </div>
-    </section>
-
-    <script src="./js/index.js"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
