@@ -1,13 +1,11 @@
-import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./globals.css";
 
-document.body.innerHTML = '<div id="app"></div>';
+const rootEl = document.createElement("div");
+rootEl.id = "app";
+document.body.appendChild(rootEl);
 
-const root = createRoot(document.getElementById("app")!);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const root = createRoot(rootEl);
+
+root.render(<App />);
